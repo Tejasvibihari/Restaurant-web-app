@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Merienda&family=Tangerine&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yanone+Kaffeesatz:wght@300&display=swap');
+
+
+
+
+.lo {
+    font-family: 'Merienda',
+        cursive;
+    font-family: 'Tangerine',
+        cursive;
+    font-family: 'Yanone Kaffeesatz';
+}
+
+.navbar {
+    background-color: #0e0f11;
+}
+
+.navbar-brand {
+    font-family: "Merienda";
+    font-weight: bolder;
+    font-size: 7vh;
+}
+
+.nav-item {
+    font-family: 'Yanone Kaffeesatz';
+    font-size: 4vh;
+}
+
+.hero {
+    background-image: url(../img/hero.webp);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+
+.hero_head {
+    text-align: center;
+    color: #fff;
+    font-family: 'Tangerine';
+    font-size: 10vh;
+    margin-top: 250px;
+}
+
+.head_button {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.row-shadow {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.row-shadow .col-sm-4 {
+    border: 1px solid #ccc;
+}
+
+.second_section {
+    margin-top: 20px;
+    border-radius: 50%;
+}
+
+.footer {
+    background-color: black;
+    color: white;
+    padding: 20px 0;
+}
+
+.footer-title {
+    font-family: "Merienda", sans-serif;
+    font-size: 24px;
+}
+
+.footer p {
+    font-family: sans-serif;
+    font-size: 14px;
+}
+
+.menu_heading {
+    text-align: center;
+    font-family: "Merienda", sans-serif;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
