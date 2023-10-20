@@ -1,0 +1,11 @@
+{
+  "name": "restaurant-web-app",
+  "version": "1.0.0",
+  "description": " Restaurent website for taking order from the coustomer",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tejasvi Kumar",
+  "license": "ISC"
+}
