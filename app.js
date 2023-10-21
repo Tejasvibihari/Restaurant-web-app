@@ -1,9 +1,8 @@
 import bodyParser from "body-parser";
 import express from "express";
 import mongoose from "mongoose";
-import ejs from "ejs";
 import multer from "multer";
-
+import session from "express-session";
 const app = express();
 const port = 3000;
 
@@ -12,6 +11,17 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+
+app.use(session({
+    secret: "my secret key",
+    saveUninitialized: true,
+    resave: false,
+}));
+app.use((req, res, next) => {
+    res.locals.message = req.session.message;
+    delete req.session.message;
+    next();
+});
 
 // Image Upload
 
@@ -41,10 +51,10 @@ mongoose.connect("mongodb://127.0.0.1:27017/restaurantDB")
 
 
 const productSchema = new mongoose.Schema({
-    _id: {
-        type: Number,
-        required: true,
-    },
+    // _id: {
+    //     type: Number,
+    //     required: true,
+    // },
     name: {
         type: String,
         required: true,
@@ -107,26 +117,22 @@ app.get("/product", (req, res) => {
 
 
 app.post("/addproduct", upload.single("image"), (req, res) => {
-    const id = req.body["id"];
+    // const id = req.body["id"];
     const name = req.body["name"];
     const description = req.body["description"];
     const price = req.body["price"];
     const type = req.body["type"];
-    const file = req.file;
-
-    if (!file) {
-        // Handle the file upload error
-        return res.status(400).send("File upload failed");
-    }
+    const file = req.file.filename;
 
     const product = new Product({
-        _id: id,
+        // _id: id,
         name: name,
         description: description,
         price: price,
         type: type,
-        imagePath: `/uploads/${file.originalname}`
+        imagePath: file
     });
+
 
     product.save();
     res.redirect("/product")
