@@ -1,0 +1,39 @@
+<%- include("partials/header.ejs") %>
+
+    <div class="table_section">
+        <table>
+            <thead style="background-color: black">
+                <tr>
+                    <th>ID</th>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Type</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td><img src="https://example.com/image.jpg" alt="Product image"></td>
+                    <td>Product Name</td>
+                    <td>Product description.</td>
+                    <td>Product type.</td>
+                    <td>$100.00</td>
+                    <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><img src="https://example.com/image2.jpg" alt="Product image"></td>
+                    <td>Product Name 2</td>
+                    <td>Product description 2.</td>
+                    <td>Product type 2.</td>
+                    <td>$200.00</td>
+                    <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <%- include("partials/footer.ejs") %>

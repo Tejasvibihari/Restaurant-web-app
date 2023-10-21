@@ -83,3 +83,37 @@
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
+.form-container {
+    margin: 20px 0;
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+label {
+    font-weight: bold;
+}
+
+.table_section {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+table {
+    border: 2px solid black;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+thead {
+    color: white;
+}
+
+th,
+td {
+    padding: 5px;
+}
+
+th {
+    font-weight: bold;
+}
