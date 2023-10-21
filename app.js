@@ -11,6 +11,7 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
+app.use(express.static("uploads"));
 
 app.use(session({
     secret: "my secret key",
@@ -31,7 +32,7 @@ const storage = multer.diskStorage({
         cb(null, "./uploads");
     },
     filename: (req, file, cb) => {
-        cb(null, file.fieldname + "_" + Date.now + "_" + file.originalname);
+        cb(null, file.originalname);
     },
 });
 
@@ -109,7 +110,15 @@ app.get("/addproduct", (req, res) => {
 });
 
 app.get("/product", (req, res) => {
-    res.render("product.ejs");
+    Product.find({})
+        .then((productDetail) => {
+            res.render("product.ejs", ({ product: productDetail }));
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+
+
 });
 
 
@@ -134,7 +143,16 @@ app.post("/addproduct", upload.single("image"), (req, res) => {
     });
 
 
-    product.save();
+    product.save()
+        .then(() => {
+            req.session.message = {
+                type: "success",
+                message: "Product added Successfully"
+            }
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     res.redirect("/product")
 });
 

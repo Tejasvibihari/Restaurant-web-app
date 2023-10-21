@@ -1,39 +1,87 @@
 <%- include("partials/header.ejs") %>
+    <div class="container">
+        <a href="/addproduct"><button type="button" class="btn btn-warning">Add Product</button></a>
+        <% if (message) { %>
+            <div class="alert alert-dismissible fade show alert-<%= message.type %>" role="alert">
+                <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                <strong>
+                    <%= message.message %>
+                </strong>
+            </div>
+            <% } %>
+    </div>
+    <div class="table_section container">
 
-    <div class="table_section">
-        <table>
-            <thead style="background-color: black">
-                <tr>
-                    <th>ID</th>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Type</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td><img src="https://example.com/image.jpg" alt="Product image"></td>
-                    <td>Product Name</td>
-                    <td>Product description.</td>
-                    <td>Product type.</td>
-                    <td>$100.00</td>
-                    <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><img src="https://example.com/image2.jpg" alt="Product image"></td>
-                    <td>Product Name 2</td>
-                    <td>Product description 2.</td>
-                    <td>Product type 2.</td>
-                    <td>$200.00</td>
-                    <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
-                </tr>
-            </tbody>
-        </table>
+        <% if (product !="" ) { %>
+            <table class="table table-danger table-striped mt-5 mb-5">
+                <thead style="background-color: black">
+                    <tr>
+
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+                    <% product.forEach(element=> { %>
+                        <tr class="table-success table-striped align-middle">
+                            <td>
+                                <img src="<%= element.imagePath %>" width="100" class="img-thumbnail" alt="">
+                            </td>
+                            <td>
+                                <%= element.name %>
+                            </td>
+                            <td>
+                                <%= element.description %>
+                            </td>
+                            <td>
+                                <%= element.type %>
+                            </td>
+                            <td>
+                                <%= element.price %>
+                            </td>
+                            <td class="action_cell">
+                                <a href="/edit/<%= element._id %>">
+                                    <i class="fa-solid fa-pen-to-square" style="color: #0ec411;"></i>
+                                </a>
+                                <a href="/delet/<%= element._id %>">
+                                    <i class="fa-solid fa-trash" style="color: #f50505;"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <% }) %>
+                </tbody>
+            </table>
+            <% } else { %>
+                <h1 class="text-center text-secondary mt-5"> No Product Found</h1>
+                <% } %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     </div>
     <%- include("partials/footer.ejs") %>

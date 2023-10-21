@@ -117,3 +117,13 @@ td {
 th {
     font-weight: bold;
 }
+
+.action_cell {
+    text-align: center;
+}
+
+.action_cell i {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: larger;
+}
