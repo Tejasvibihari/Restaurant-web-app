@@ -1,0 +1,51 @@
+<%- include("partials/header.ejs") %>
+
+
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-sm-6">
+                <h3 class="text-dark align-middle">Edit Product (<%= product.name %>)</h3>
+                <form action="/update/<%= product._id %>" method="post" enctype="multipart/form-data"
+                    class="form-container">
+                    <!-- <div class="mb-3">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id">
+                </div> -->
+                    <div class="mb-3">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" value="<%= product.name %>" id="name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description">Description</label>
+                        <textarea class="form-control" id="description" value="<%= product.description %>"
+                            name="description" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="price">Price</label>
+                        <input type="number" class="form-control" id="price" value="<%= product.price %>" name="price">
+                    </div>
+                    <div class="mb-3">
+                        <label for="type">Type</label>
+                        <select id="type" value="<%= product.type %>" name="type">
+                            <option value="pizza">Pizza</option>
+                            <option value="burgur">Burgur</option>
+                            <option value="beverage">Beverage</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image">Image Upload</label>
+                        <input type="file" class="form-control" id="image" name="image">
+                        <img src="/<%= product.imagePath %>" width="100" class="img-thumbnail mt-1" alt="">
+                    </div>
+                    <input type="hidden" name="old_image" value="<%= product.imagePath %>">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <%- include("partials/footer.ejs") %>

@@ -3,8 +3,11 @@ import express from "express";
 import mongoose from "mongoose";
 import multer from "multer";
 import session from "express-session";
+import fs from "fs";
+
 const app = express();
 const port = 3000;
+
 
 
 app.set("view engine", "ejs");
@@ -117,9 +120,31 @@ app.get("/product", (req, res) => {
         .catch((err) => {
             console.log(err);
         });
-
-
 });
+
+app.get("/edit/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const product = await Product.findById(id);
+
+        // If the product is not found, redirect to the home page.
+        if (!product) {
+            return res.redirect("/");
+        }
+
+        // Render the edit product page with the product details.
+        res.render("editProduct.ejs", { title: "Edit Product", product });
+    } catch (error) {
+        // Handle the error.
+        res.redirect("/");
+    }
+});
+
+
+
+
+
 
 
 
@@ -154,6 +179,78 @@ app.post("/addproduct", upload.single("image"), (req, res) => {
             console.log(err);
         })
     res.redirect("/product")
+});
+
+// Update Product Route 
+app.post("/update/:id", upload.single("image"), async (req, res) => {
+    const id = req.params.id;
+    let newImage = "";
+
+    if (req.file) {
+        newImage = req.file.filename;
+        try {
+            await fs.promises.unlink(`./uploads/${req.body.oldImage}`);
+        } catch (err) {
+            console.log(err);
+        }
+    } else {
+        newImage = req.body.oldImage;
+    }
+
+    try {
+        const result = await Product.findByIdAndUpdate(id, {
+            name: req.body.name,
+            description: req.body.description,
+            price: req.body.price,
+            type: req.body.type,
+            imagePath: newImage,
+        });
+
+        req.session.message = {
+            type: "success",
+            message: "Product updated successfully.",
+        };
+
+        res.redirect("/product");
+    } catch (err) {
+        res.json({ message: err.message, type: "danger" });
+    }
+});
+
+
+
+app.get("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        // Find the product by ID.
+        const product = await Product.findById(id);
+
+        // If the product is not found, return an error.
+        if (!product) {
+            return res.json({ message: "Product not found." });
+        }
+
+        // If the product has an image, delete it.
+        if (product.imagePath) {
+            await fs.promises.unlink(`./uploads/${product.imagePath}`);
+        }
+
+        // Delete the product from the database.
+        await Product.findByIdAndRemove(id);
+
+        // Set a success message in the session.
+        req.session.message = {
+            type: "success",
+            message: "Product deleted successfully.",
+        };
+
+        // Redirect the user to the product list page.
+        res.redirect("/product");
+    } catch (err) {
+        // Handle the error.
+        res.json({ message: err.message });
+    }
 });
 
 
