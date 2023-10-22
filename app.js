@@ -118,13 +118,32 @@ app.get("/contact", (req, res) => {
     res.render("contact.ejs");
 });
 app.get("/pizza", (req, res) => {
-    res.render("pizza.ejs");
+    Product.find({ type: "pizza" })
+        .then((pizzaproduct) => {
+            res.render("pizza.ejs", ({ pizzaproduct: pizzaproduct }));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+
 });
 app.get("/burgur", (req, res) => {
-    res.render("burgur.ejs");
+    Product.find({ type: "burgur" })
+        .then((burgurproduct) => {
+            res.render("burgur.ejs", ({ burgurproduct: burgurproduct }));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 });
 app.get("/beverage", (req, res) => {
-    res.render("beverage.ejs");
+    Product.find({ type: "beverage" })
+        .then((beverageproduct) => {
+            res.render("beverage.ejs", ({ beverageproduct: beverageproduct }));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 });
 app.get("/addproduct", (req, res) => {
     res.render("addproduct.ejs");

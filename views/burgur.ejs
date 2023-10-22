@@ -1,5 +1,28 @@
 <%- include("partials/header.ejs") %>
-
-    <h1>burgur</h1>
+    <div class="menu container">
+        <h1 class="menu_heading">
+            Burger
+        </h1>
+        <div class="row">
+            <% burgurproduct.forEach((product)=> { %>
+                <div class="col-sm-4 mb-4">
+                    <div class="card">
+                        <img src="<%= product.imagePath %>" alt="<%= product.name %>">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= product.name %>
+                            </h5>
+                            <p class="card-text">
+                                <%= product.description %>
+                            </p>
+                            <p class="card-price">$<%= product.price %>
+                            </p>
+                            <a href="#" class="btn btn-primary">Order Now</a>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+    </div>
 
     <%- include("partials/footer.ejs") %>
