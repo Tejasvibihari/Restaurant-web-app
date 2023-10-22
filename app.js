@@ -88,10 +88,28 @@ const Product = mongoose.model("Product", productSchema);
 
 
 
-
 app.get("/", (req, res) => {
-    res.render("index.ejs");
+    const pizzaPromise = Product.find({ type: "pizza" }).exec();
+    const burgerPromise = Product.find({ type: "burgur" }).exec();
+    const beveragePromise = Product.find({ type: "beverage" }).exec();
+
+    Promise.all([pizzaPromise, burgerPromise, beveragePromise])
+        .then(([pizzaProducts, burgerProducts, beverageProducts]) => {
+            res.render("index.ejs", {
+                pizzaproduct: pizzaProducts,
+                burgurproduct: burgerProducts,
+                beverageproduct: beverageProducts
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        });
 });
+
+
+
+
 app.get("/about", (req, res) => {
     res.render("about.ejs");
 });
