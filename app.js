@@ -178,6 +178,9 @@ app.get("/edit/:id", async (req, res) => {
     }
 });
 
+app.get("/bookTable", (req, res) => {
+    res.render("bookTable.ejs");
+})
 
 
 

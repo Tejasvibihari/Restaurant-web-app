@@ -132,3 +132,16 @@ th {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     transition: 0.3s;
 }
+
+.table-booking-heading {
+    font-family: "Merienda", sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+    color: #000000;
+}
+
+.table-booking-section {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
