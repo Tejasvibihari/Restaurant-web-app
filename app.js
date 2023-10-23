@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import multer from "multer";
 import session from "express-session";
 import fs from "fs";
+import QRCode from 'qrcode';
 
 const app = express();
 const port = 3000;
@@ -53,6 +54,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/restaurantDB")
         comsole.log(err);
     });
 
+// Product Schema 
 
 const productSchema = new mongoose.Schema({
     // _id: {
@@ -83,7 +85,35 @@ const productSchema = new mongoose.Schema({
 });
 const Product = mongoose.model("Product", productSchema);
 
+// Coustomer Schema 
 
+const coustomerSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: false
+    },
+    mobile: {
+        type: Number,
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true
+    },
+    // time: {
+    //     type: Date,
+    //     required: true
+    // },
+    group: {
+        type: String,
+        required: true
+    }
+})
+const Coustomer = mongoose.model("Coustomer", coustomerSchema);
 
 
 
@@ -159,6 +189,45 @@ app.get("/product", (req, res) => {
         });
 });
 
+// Delete Product 
+
+app.get("/delete/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        // Find the product by ID.
+        const product = await Product.findById(id);
+
+        // If the product is not found, return an error.
+        if (!product) {
+            return res.json({ message: "Product not found." });
+        }
+
+        // If the product has an image, delete it.
+        if (product.imagePath) {
+            await fs.promises.unlink(`./uploads/${product.imagePath}`);
+        }
+
+        // Delete the product from the database.
+        await Product.findByIdAndRemove(id);
+
+        // Set a success message in the session.
+        req.session.message = {
+            type: "success",
+            message: "Product deleted successfully.",
+        };
+
+        // Redirect the user to the product list page.
+        res.redirect("/product");
+    } catch (err) {
+        // Handle the error.
+        res.json({ message: err.message });
+    }
+});
+
+
+// Edit Product 
+
 app.get("/edit/:id", async (req, res) => {
     const id = req.params.id;
 
@@ -180,8 +249,20 @@ app.get("/edit/:id", async (req, res) => {
 
 app.get("/bookTable", (req, res) => {
     res.render("bookTable.ejs");
-})
+});
 
+app.get("/bookingdetail", (req, res) => {
+    Coustomer.find({})
+        .then((coustomerDetail) => {
+            res.render("bookingdetail.ejs", ({ coustomer: coustomerDetail }));
+        })
+        .catch((err) => {
+            console.log(err);
+        })
+});
+app.get("/orderSuccess", (req, res) => {
+    res.render("orderSuccess.ejs");
+});
 
 
 
@@ -257,41 +338,39 @@ app.post("/update/:id", upload.single("image"), async (req, res) => {
     }
 });
 
+app.post("/bookTable", (req, res) => {
+    const name = req.body["name"];
+    const email = req.body["email"];
+    const mobile = req.body["mobile"];
+    const date = req.body["date"];
+    // const time = req.body["time"];
+    const group = req.body["group"];
+
+    const coustomer = new Coustomer({
+        name: name,
+        email: email,
+        mobile: mobile,
+        date: date,
+        // time: time,
+        group: group
+    });
+
+    coustomer.save()
+        .then(() => {
+
+        })
+        .catch((err) => {
+            console.log(err);
+        })
 
 
-app.get("/delete/:id", async (req, res) => {
-    const id = req.params.id;
-
-    try {
-        // Find the product by ID.
-        const product = await Product.findById(id);
-
-        // If the product is not found, return an error.
-        if (!product) {
-            return res.json({ message: "Product not found." });
-        }
-
-        // If the product has an image, delete it.
-        if (product.imagePath) {
-            await fs.promises.unlink(`./uploads/${product.imagePath}`);
-        }
-
-        // Delete the product from the database.
-        await Product.findByIdAndRemove(id);
-
-        // Set a success message in the session.
-        req.session.message = {
-            type: "success",
-            message: "Product deleted successfully.",
-        };
-
-        // Redirect the user to the product list page.
-        res.redirect("/product");
-    } catch (err) {
-        // Handle the error.
-        res.json({ message: err.message });
-    }
+    res.redirect("/orderSuccess");
 });
+
+
+// With promises
+
+
 
 
 

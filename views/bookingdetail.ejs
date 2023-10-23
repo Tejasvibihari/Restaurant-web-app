@@ -1,0 +1,83 @@
+<%- include("partials/header.ejs") %>
+
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-lg-6 align-middle">
+                <a href="/addproduct"><button type="button" class="btn btn-warning">Add Product</button></a>
+            </div>
+            <div class="col-lg-6 align-center">
+                <a href="/product"><button type="button" class="btn btn-warning">Products</button></a>
+            </div>
+
+        </div>
+    </div>
+    <div class="table_section container">
+
+        <% if (coustomer !="" ) { %>
+            <table class="table table-danger table-striped mt-5 mb-5">
+                <thead style="background-color: black">
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
+                        <th>Date</th>
+                        <th>Group</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+                    <% coustomer.forEach(element=> { %>
+                        <tr class="table-success table-striped align-middle">
+
+                            <td>
+                                <%= element.name %>
+                            </td>
+                            <td>
+                                <%= element.email %>
+                            </td>
+                            <td>
+                                <%= element.mobile %>
+                            </td>
+                            <td>
+                                <%= element.date %>
+                            </td>
+                            <td>
+                                <%= element.group %>
+                            </td>
+
+                        </tr>
+
+                        <% }) %>
+                </tbody>
+            </table>
+            <% } else { %>
+                <h1 class="text-center text-secondary mt-5"> No Booking Found</h1>
+                <% } %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+    <%- include("partials/footer.ejs") %>

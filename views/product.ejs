@@ -1,6 +1,13 @@
 <%- include("partials/header.ejs") %>
     <div class="container">
-        <a href="/addproduct"><button type="button" class="btn btn-warning">Add Product</button></a>
+        <div class="row mt-5">
+            <div class="col-lg-6 align-middle">
+                <a href="/addproduct"><button type="button" class="btn btn-warning">Add Product</button></a>
+            </div>
+            <div class="col-lg-6 align-center">
+                <a href="/bookingDetail"><button type="button" class="btn btn-warning">Booking Detail</button></a>
+            </div>
+        </div>
         <% if (message) { %>
             <div class="alert alert-dismissible fade show alert-<%= message.type %>" role="alert">
                 <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
